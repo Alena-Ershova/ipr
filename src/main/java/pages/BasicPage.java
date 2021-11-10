@@ -1,23 +1,24 @@
 package pages;
 
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import wrapper.DriverWrapper;
-import org.junit.jupiter.api.Assertions;
 
 public class BasicPage {
     //общие методы
-    protected DriverWrapper driver = DriverWrapper.get();
+    protected DriverWrapper driver;
     protected String pageName;
     protected String address;
 
     protected BasicPage(String pageName, String address) {
+        this.driver = DriverWrapper.get();
         this.pageName = pageName;
         this.address = address;
     }
 
     public void close(){
-        driver.close();
+        driver.quit();
     }
 
     public void open(){

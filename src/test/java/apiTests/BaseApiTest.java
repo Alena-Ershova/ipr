@@ -7,6 +7,10 @@ import java.util.Random;
  */
 public class BaseApiTest {
 
+    /**
+     * Генератор строки
+     * @return String
+     */
     protected static String createName(){
         Random rand = new Random();
         return  "test" + rand.nextInt(100);

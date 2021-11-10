@@ -2,8 +2,8 @@ package apiTests;
 
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 
@@ -15,8 +15,8 @@ public class LettersApiTest extends BaseApiTest{
      * Создание почты для дальнейшего
      * использования
      */
-    @Before
-    public void createMail() {
+    @BeforeAll
+    public static void createMail() {
         RestAssured.baseURI = "https://post-shift.ru";
         RestAssured.useRelaxedHTTPSValidation();
         ValidatableResponse response = given()

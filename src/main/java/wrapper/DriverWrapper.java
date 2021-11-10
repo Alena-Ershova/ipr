@@ -42,6 +42,7 @@ public class DriverWrapper {
 
     public void quit() {
         driver.quit();
+        driverWrapper = null;
     }
 
     public WebElement getElement(By locator) throws TimeoutException{
