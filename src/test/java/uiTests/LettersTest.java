@@ -1,20 +1,25 @@
 package uiTests;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 import pages.InboxPage;
 import pages.MainPage;
 
 public class LettersTest extends BaseTest{
-    MainPage mainPage = new MainPage();
-    InboxPage inboxPage = new InboxPage();
+    private static MainPage mainPage;
+    private static InboxPage inboxPage;
 
-    @Before
-    public void login(){
+    @BeforeAll
+    public static void login(){
+        mainPage = new MainPage();
+        inboxPage = new InboxPage();
         mainPage.open();
         mainPage.login();
         inboxPage.loginSuccessful();
     }
+
     @Test
     public void lettersTest() {
         inboxPage.printLetters();

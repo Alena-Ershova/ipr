@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 public class MainPage extends BasicPage{
@@ -11,10 +12,12 @@ public class MainPage extends BasicPage{
     //данные
     private String login = "enotov.enot@internet.ru";
     private String password = "pass51423";
+
     public MainPage() {
         super("Главная", "https://mail.ru");
     }
 
+    @Step("Логин в почту")
     public void login(){
         sendKeys(By.xpath(loginFieldXpath),login);
         clickOnElement(By.xpath(enterPassButtonXpath));

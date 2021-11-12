@@ -1,9 +1,10 @@
 package apiTests;
 
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 
@@ -11,12 +12,9 @@ public class LettersApiTest extends BaseApiTest{
     private final static String HASH = "851d352505ada46a8c7d92dc9a83be1a";
     private static String key;
 
-    /**
-     * Создание почты для дальнейшего
-     * использования
-     */
-    @Before
-    public void createMail() {
+    @Step("Создаем почту")
+    @BeforeAll
+    public static void createMail() {
         RestAssured.baseURI = "https://post-shift.ru";
         RestAssured.useRelaxedHTTPSValidation();
         ValidatableResponse response = given()
@@ -28,9 +26,7 @@ public class LettersApiTest extends BaseApiTest{
         key = response.extract().response().jsonPath().get("key");
     }
 
-    /**
-     * Проверка получения списка писем
-     */
+    @Step("Получаем входящие письма")
     @Test
     public void getLettersTest() {
         given()

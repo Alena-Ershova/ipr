@@ -1,12 +1,21 @@
 package uiTests;
 
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 import pages.InboxPage;
 import pages.MainPage;
 
 public class LoginTest extends BaseTest{
-    MainPage mainPage = new MainPage();
-    InboxPage inboxPage = new InboxPage();
+    private static MainPage mainPage;
+    private static InboxPage inboxPage;
+
+    @BeforeAll
+    public static void setUp(){
+        mainPage = new MainPage();
+        inboxPage = new InboxPage();
+    }
 
     @Test
     public void loginTest() {
