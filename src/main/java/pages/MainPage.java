@@ -17,7 +17,7 @@ public class MainPage extends BasicPage{
         super("Главная", "https://mail.ru");
     }
 
-    @Step("")
+    @Step("Логин в почту")
     public void login(){
         sendKeys(By.xpath(loginFieldXpath),login);
         clickOnElement(By.xpath(enterPassButtonXpath));

@@ -1,6 +1,5 @@
 package wrapper;
 
-import org.junit.jupiter.api.AfterAll;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
@@ -9,6 +8,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
+/**
+ * Класс-обертка для web driver
+ * реализует Singleton и базовые методы работы с драйвером
+ */
 public class DriverWrapper {
     private RemoteWebDriver driver = null;
     private WebDriverWait wait = null;
