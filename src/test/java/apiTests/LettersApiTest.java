@@ -3,6 +3,7 @@ package apiTests;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
+import models.Letter;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -42,12 +43,12 @@ public class LettersApiTest extends BaseApiTest {
                 .then().log().all().statusCode(200);
     }
 
-
     @Step("Получаем входящие письма после отправки нового письма")
     @Test
     public void receiveNewLetterTest() {
         MainPage page = new MainPage();
-        page.sendLetter(address);
+        Letter letter = new Letter(address, createName(), createName(), null);
+        page.sendLetterWithoutCopies(letter);
         //письмо отправляется не сразу, поэтому приходится ждать
         try {
             Thread.sleep(30000);
@@ -68,7 +69,7 @@ public class LettersApiTest extends BaseApiTest {
                 .queryParam("id", id)
                 .when().log().all().get("/api.php")
                 .then().log().all().statusCode(200);
-        assertTrue(response.extract().response().jsonPath().get("message").toString().contains(address));
+        assertTrue(response.extract().response().jsonPath().get("message").toString().contains(letter.getText()));
     }
 
     @AfterAll
