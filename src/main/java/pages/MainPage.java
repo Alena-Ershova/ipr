@@ -1,7 +1,9 @@
 package pages;
 
 import io.qameta.allure.Step;
+import models.Letter;
 import org.openqa.selenium.By;
+import utils.Data;
 
 public class MainPage extends BasicPage{
     private String loginFieldXpath = "//input[@name=\"login\"]";
@@ -15,31 +17,29 @@ public class MainPage extends BasicPage{
     private String topicNewLetter = "//input[@name='Subject']";
     private String textNewLetter = "//div[@role='textbox']";
     private String sendNewLetter = "//span[text()='Отправить']";
-    // данные
-    private String login = "enotov.enot@internet.ru";
-    private String password = "pass51423";
+    private String closeNewLetterSent = "//*[@class='ico ico_16-close ico_size_s']";
 
     public MainPage() {
         super("Главная", "https://mail.ru");
     }
 
     @Step("Логин в почту")
-    public void login(){
-        sendKeys(By.xpath(loginFieldXpath),login);
+    public void login(String login, String password){
+        sendKeys(By.xpath(loginFieldXpath), login);
         clickOnElement(By.xpath(enterPassButtonXpath));
         sendKeys(By.xpath(passwordFieldXpath),password);
         clickOnElement(By.xpath(enterButtonXpath));
     }
 
     @Step("Отправляем письмо на адрес {address}")
-    public void sendLetter(String address){
+    public void sendLetterWithoutCopies(Letter letter){
         open();
-        login();
+        login(Data.login, Data.password);
         clickOnElement(By.xpath(createNewLetter));
-        sendKeys(By.xpath(receiverNewLetter),address);
-        sendKeys(By.xpath(topicNewLetter),address);
-        sendKeys(By.xpath(topicNewLetter),address);
-        sendKeys(By.xpath(textNewLetter),address);
+        sendKeys(By.xpath(receiverNewLetter), letter.getAddress());
+        sendKeys(By.xpath(topicNewLetter), letter.getSubject());
+        sendKeys(By.xpath(textNewLetter), letter.getText());
         clickOnElement(By.xpath(sendNewLetter));
+        clickOnElement(By.xpath(closeNewLetterSent));
     }
 }

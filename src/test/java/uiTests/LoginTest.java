@@ -1,12 +1,12 @@
 package uiTests;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import io.qameta.allure.Epic;
+import org.junit.jupiter.api.*;
 import pages.InboxPage;
 import pages.MainPage;
+import utils.Data;
 
+@Epic("Ui тесты")
 public class LoginTest extends BaseTest{
     private static MainPage mainPage;
     private static InboxPage inboxPage;
@@ -17,10 +17,11 @@ public class LoginTest extends BaseTest{
         inboxPage = new InboxPage();
     }
 
+    @DisplayName("Тест на логин")
     @Test
     public void loginTest() {
         mainPage.open();
-        mainPage.login();
+        mainPage.login(Data.login,Data.password);
         inboxPage.loginSuccessful();
     }
 }
