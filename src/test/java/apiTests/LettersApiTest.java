@@ -1,5 +1,7 @@
 package apiTests;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
@@ -9,6 +11,7 @@ import models.MessageListResponse;
 import models.MessageTextResponse;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.MainPage;
 
@@ -16,6 +19,8 @@ import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static utils.TestUtils.createString;
 
+@Epic("Тестирование почты post-shift")
+@Feature("Получение списка писем")
 public class LettersApiTest extends BaseApiTest {
     private final static String HASH = "e0c9d02ddb72226c384758097db0045d";
     private static String key;
@@ -36,7 +41,7 @@ public class LettersApiTest extends BaseApiTest {
         address = response.extract().response().jsonPath().get("email");
     }
 
-    @Step("Получаем входящие письма")
+    @DisplayName("Получаем входящие письма")
     @Test
     public void getLettersTest() {
         given()
@@ -47,7 +52,7 @@ public class LettersApiTest extends BaseApiTest {
                 .then().log().all().statusCode(200);
     }
 
-    @Step("Получаем входящие письма после отправки нового письма")
+    @DisplayName("Получаем входящие письма после отправки нового письма")
     @Test
     public void receiveNewLetterTest() {
         MainPage page = new MainPage();

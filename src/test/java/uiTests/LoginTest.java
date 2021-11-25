@@ -1,12 +1,15 @@
 package uiTests;
 
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 import pages.InboxPage;
 import pages.MainPage;
 import utils.LoginData;
 
-@Epic("Ui тесты")
+@Epic("Тестирование почты mail.ru")
+@Feature("Авторизация в почту")
 public class LoginTest extends BaseTest{
     private static MainPage mainPage;
     private static InboxPage inboxPage;
