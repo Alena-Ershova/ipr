@@ -7,7 +7,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.InboxPage;
 import pages.MainPage;
-import utils.Data;
+import utils.LoginData;
+
+import static utils.TestUtils.createString;
 
 @Epic("Ui тесты")
 public class SendLetterTest extends BaseTest{
@@ -24,7 +26,7 @@ public class SendLetterTest extends BaseTest{
     @DisplayName("Тест на отправку письма себе")
     @Test
     public void sendLetterTest() {
-        letter = new Letter(Data.login, createString(), createString(), null);
+        letter = new Letter(LoginData.login, createString(), createString(), null);
         mainPage.sendLetterWithoutCopies(letter);
         inboxPage.clickOnLetterBySubject(letter.getSubject());
         inboxPage.checkLetterText(letter.getText());

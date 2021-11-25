@@ -3,7 +3,9 @@ package pages;
 import io.qameta.allure.Step;
 import models.Letter;
 import org.openqa.selenium.By;
-import utils.Data;
+
+import static utils.LoginData.login;
+import static utils.LoginData.password;
 
 public class MainPage extends BasicPage{
     private String loginFieldXpath = "//input[@name=\"login\"]";
@@ -34,7 +36,7 @@ public class MainPage extends BasicPage{
     @Step("Отправляем письмо на адрес {address}")
     public void sendLetterWithoutCopies(Letter letter){
         open();
-        login(Data.login, Data.password);
+        login(login, password);
         clickOnElement(By.xpath(createNewLetter));
         sendKeys(By.xpath(receiverNewLetter), letter.getAddress());
         sendKeys(By.xpath(topicNewLetter), letter.getSubject());

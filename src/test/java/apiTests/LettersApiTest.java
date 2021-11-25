@@ -4,6 +4,9 @@ import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import models.Letter;
+import models.MessageHeader;
+import models.MessageListResponse;
+import models.MessageTextResponse;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -11,6 +14,7 @@ import pages.MainPage;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static utils.TestUtils.createString;
 
 public class LettersApiTest extends BaseApiTest {
     private final static String HASH = "e0c9d02ddb72226c384758097db0045d";
@@ -25,7 +29,7 @@ public class LettersApiTest extends BaseApiTest {
         ValidatableResponse response = given()
                 .queryParam("action", "new")
                 .queryParam("hash", HASH)
-                .queryParam("name", createName())
+                .queryParam("name", createString())
                 .when().log().all().get("/api.php")
                 .then().log().all().statusCode(200);
         key = response.extract().response().jsonPath().get("key");
@@ -47,7 +51,7 @@ public class LettersApiTest extends BaseApiTest {
     @Test
     public void receiveNewLetterTest() {
         MainPage page = new MainPage();
-        Letter letter = new Letter(address, createName(), createName(), null);
+        Letter letter = new Letter(address, createString(), createString(), null);
         page.sendLetterWithoutCopies(letter);
         //письмо отправляется не сразу, поэтому приходится ждать
         try {
@@ -61,15 +65,15 @@ public class LettersApiTest extends BaseApiTest {
                 .queryParam("key", key)
                 .when().log().all().get("/api.php")
                 .then().log().all().statusCode(200);
-        int id = listResponse.extract().response().jsonPath().getInt("[0].id");
+        MessageHeader[] messageHeaders = listResponse.extract().body().as(MessageHeader[].class);
         ValidatableResponse response = given()
                 .queryParam("action", "getmail")
                 .queryParam("hash", HASH)
                 .queryParam("key", key)
-                .queryParam("id", id)
+                .queryParam("id", messageHeaders[0].getId())
                 .when().log().all().get("/api.php")
                 .then().log().all().statusCode(200);
-        assertTrue(response.extract().response().jsonPath().get("message").toString().contains(letter.getText()));
+        assertTrue(response.extract().body().as(MessageTextResponse.class).getMessage().contains(letter.getText()));
     }
 
     @AfterAll

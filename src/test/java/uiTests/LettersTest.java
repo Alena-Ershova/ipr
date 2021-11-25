@@ -4,7 +4,7 @@ import io.qameta.allure.Epic;
 import org.junit.jupiter.api.*;
 import pages.InboxPage;
 import pages.MainPage;
-import utils.Data;
+import utils.LoginData;
 
 @Epic("Ui тесты")
 public class LettersTest extends BaseTest{
@@ -16,7 +16,7 @@ public class LettersTest extends BaseTest{
         mainPage = new MainPage();
         inboxPage = new InboxPage();
         mainPage.open();
-        mainPage.login(Data.login, Data.password);
+        mainPage.login(LoginData.login, LoginData.password);
         inboxPage.loginSuccessful();
     }
 
