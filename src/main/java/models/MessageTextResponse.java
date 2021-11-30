@@ -1,6 +1,10 @@
 package models;
 
+/**
+ * Класс для представления текста письма
+ */
 public class MessageTextResponse {
+    //текст письма
     private String message;
 
     public MessageTextResponse() {

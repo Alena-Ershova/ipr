@@ -15,11 +15,7 @@ public class MainPage extends BasicPage{
     private String enterButtonXpath = "//*[@data-testid=\"login-to-mail\"]";
     //адреса для отправки нового письма
     private String createNewLetter = "//span[text()='Написать письмо']";
-    private String receiverNewLetter = "//input[contains(@class,'container')]";
-    private String topicNewLetter = "//input[@name='Subject']";
-    private String textNewLetter = "//div[@role='textbox']";
-    private String sendNewLetter = "//span[text()='Отправить']";
-    private String closeNewLetterSent = "//*[@class='ico ico_16-close ico_size_s']";
+
 
     public MainPage() {
         super("Главная", "https://mail.ru");
@@ -33,15 +29,8 @@ public class MainPage extends BasicPage{
         clickOnElement(By.xpath(enterButtonXpath));
     }
 
-    @Step("Отправляем письмо на адрес {address}")
-    public void sendLetterWithoutCopies(Letter letter){
-        open();
-        login(login, password);
+    @Step("Переходим к отправке нового письма")
+    public void goToNewLetter(){
         clickOnElement(By.xpath(createNewLetter));
-        sendKeys(By.xpath(receiverNewLetter), letter.getAddress());
-        sendKeys(By.xpath(topicNewLetter), letter.getSubject());
-        sendKeys(By.xpath(textNewLetter), letter.getText());
-        clickOnElement(By.xpath(sendNewLetter));
-        clickOnElement(By.xpath(closeNewLetterSent));
     }
 }

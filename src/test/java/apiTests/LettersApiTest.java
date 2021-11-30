@@ -7,16 +7,18 @@ import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import models.Letter;
 import models.MessageHeader;
-import models.MessageListResponse;
 import models.MessageTextResponse;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.MainPage;
+import pages.NewLetterPage;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static utils.LoginData.login;
+import static utils.LoginData.password;
 import static utils.TestUtils.createString;
 
 @Epic("Тестирование почты post-shift")
@@ -56,8 +58,12 @@ public class LettersApiTest extends BaseApiTest {
     @Test
     public void receiveNewLetterTest() {
         MainPage page = new MainPage();
+        NewLetterPage letterPage = new NewLetterPage();
+        page.open();
+        page.login(login, password);
         Letter letter = new Letter(address, createString(), createString(), null);
-        page.sendLetterWithoutCopies(letter);
+        page.goToNewLetter();
+        letterPage.sendLetterWithoutCopies(letter);
         //письмо отправляется не сразу, поэтому приходится ждать
         try {
             Thread.sleep(30000);

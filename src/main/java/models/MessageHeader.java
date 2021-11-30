@@ -1,9 +1,16 @@
 package models;
 
+/**
+ * Класс для представления заголовков писем
+ */
 public class MessageHeader {
+    //id письма
     private int id;
+    //дата отправаки письма
     private String date;
+    //тема письма
     private String subject;
+    //от кого письмо
     private String from;
 
     public MessageHeader() {
