@@ -19,14 +19,4 @@ public class BaseTest {
     public static void close(){
         page.close();
     }
-
-    /**
-     * Генератор строки
-     * @return String
-     */
-    @Step("Создание строки")
-    protected static String createString(){
-        Random rand = new Random();
-        return  "test" + rand.nextInt(100);
-    }
 }

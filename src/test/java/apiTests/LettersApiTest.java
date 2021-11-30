@@ -1,17 +1,28 @@
 package apiTests;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import models.Letter;
+import models.MessageHeader;
+import models.MessageTextResponse;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.MainPage;
+import pages.NewLetterPage;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static utils.LoginData.login;
+import static utils.LoginData.password;
+import static utils.TestUtils.createString;
 
+@Epic("Тестирование почты post-shift")
+@Feature("Получение списка писем")
 public class LettersApiTest extends BaseApiTest {
     private final static String HASH = "e0c9d02ddb72226c384758097db0045d";
     private static String key;
@@ -25,14 +36,14 @@ public class LettersApiTest extends BaseApiTest {
         ValidatableResponse response = given()
                 .queryParam("action", "new")
                 .queryParam("hash", HASH)
-                .queryParam("name", createName())
+                .queryParam("name", createString())
                 .when().log().all().get("/api.php")
                 .then().log().all().statusCode(200);
         key = response.extract().response().jsonPath().get("key");
         address = response.extract().response().jsonPath().get("email");
     }
 
-    @Step("Получаем входящие письма")
+    @DisplayName("Получаем входящие письма")
     @Test
     public void getLettersTest() {
         given()
@@ -43,12 +54,16 @@ public class LettersApiTest extends BaseApiTest {
                 .then().log().all().statusCode(200);
     }
 
-    @Step("Получаем входящие письма после отправки нового письма")
+    @DisplayName("Получаем входящие письма после отправки нового письма")
     @Test
     public void receiveNewLetterTest() {
         MainPage page = new MainPage();
-        Letter letter = new Letter(address, createName(), createName(), null);
-        page.sendLetterWithoutCopies(letter);
+        NewLetterPage letterPage = new NewLetterPage();
+        page.open();
+        page.login(login, password);
+        Letter letter = new Letter(address, createString(), createString(), null);
+        page.goToNewLetter();
+        letterPage.sendLetterWithoutCopies(letter);
         //письмо отправляется не сразу, поэтому приходится ждать
         try {
             Thread.sleep(30000);
@@ -61,15 +76,15 @@ public class LettersApiTest extends BaseApiTest {
                 .queryParam("key", key)
                 .when().log().all().get("/api.php")
                 .then().log().all().statusCode(200);
-        int id = listResponse.extract().response().jsonPath().getInt("[0].id");
+        MessageHeader[] messageHeaders = listResponse.extract().body().as(MessageHeader[].class);
         ValidatableResponse response = given()
                 .queryParam("action", "getmail")
                 .queryParam("hash", HASH)
                 .queryParam("key", key)
-                .queryParam("id", id)
+                .queryParam("id", messageHeaders[0].getId())
                 .when().log().all().get("/api.php")
                 .then().log().all().statusCode(200);
-        assertTrue(response.extract().response().jsonPath().get("message").toString().contains(letter.getText()));
+        assertTrue(response.extract().body().as(MessageTextResponse.class).getMessage().contains(letter.getText()));
     }
 
     @AfterAll
