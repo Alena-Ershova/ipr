@@ -24,7 +24,7 @@ public class LoginTest extends BaseTest{
     @Test
     public void loginTest() {
         mainPage.open();
-        mainPage.login(LoginData.login, LoginData.password);
+        mainPage.login();
         inboxPage.loginSuccessful();
     }
 }

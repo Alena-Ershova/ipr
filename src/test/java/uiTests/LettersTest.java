@@ -5,7 +5,6 @@ import io.qameta.allure.Feature;
 import org.junit.jupiter.api.*;
 import pages.InboxPage;
 import pages.MainPage;
-import utils.LoginData;
 
 @Epic("Тестирование почты mail.ru")
 @Feature("Получение писем")
@@ -18,7 +17,7 @@ public class LettersTest extends BaseTest{
         mainPage = new MainPage();
         inboxPage = new InboxPage();
         mainPage.open();
-        mainPage.login(LoginData.login, LoginData.password);
+        mainPage.login();
         inboxPage.loginSuccessful();
     }
 

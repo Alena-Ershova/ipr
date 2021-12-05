@@ -1,11 +1,15 @@
 package pages;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.qameta.allure.Step;
-import models.Letter;
 import org.openqa.selenium.By;
+import utils.LoginData;
 
-import static utils.LoginData.login;
-import static utils.LoginData.password;
+import java.io.File;
+import java.io.IOException;
+
+import static utils.cipher.EncryptionUtils.decrypt;
+import static utils.cipher.EncryptionUtils.getKeyFromFile;
 
 public class MainPage extends BasicPage{
     private String loginFieldXpath = "//input[@name=\"login\"]";
@@ -22,7 +26,17 @@ public class MainPage extends BasicPage{
     }
 
     @Step("Логин в почту")
-    public void login(String login, String password){
+    public void login(){
+        ObjectMapper objectMapper = new ObjectMapper();
+        String login = "";
+        String password = "";
+        try {
+            LoginData loginData = objectMapper.readValue(new File("src/test/resources/LoginData.json"), LoginData.class);
+            login = decrypt(loginData.getLogin(), getKeyFromFile());
+            password = decrypt(loginData.getPassword(), getKeyFromFile());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         sendKeys(By.xpath(loginFieldXpath), login);
         clickOnElement(By.xpath(enterPassButtonXpath));
         sendKeys(By.xpath(passwordFieldXpath),password);
