@@ -1,17 +1,11 @@
 package pages;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import utils.LoginData;
+import static utils.TestDataStorage.getLogin;
+import static utils.TestDataStorage.getPassword;
 
-import java.io.File;
-import java.io.IOException;
-
-import static utils.cipher.EncryptionUtils.decrypt;
-import static utils.cipher.EncryptionUtils.getKeyFromFile;
-
-public class MainPage extends BasicPage{
+public class MainPage extends BasicPage {
     private String loginFieldXpath = "//input[@name=\"login\"]";
     private String domenFieldXpath = "//form[@data-testid=\"logged-out-form\"]//div[2]";
     private String passwordFieldXpath = "//*[@type=\"password\"]";
@@ -26,25 +20,15 @@ public class MainPage extends BasicPage{
     }
 
     @Step("Логин в почту")
-    public void login(){
-        ObjectMapper objectMapper = new ObjectMapper();
-        String login = "";
-        String password = "";
-        try {
-            LoginData loginData = objectMapper.readValue(new File("src/test/resources/LoginData.json"), LoginData.class);
-            login = decrypt(loginData.getLogin(), getKeyFromFile());
-            password = decrypt(loginData.getPassword(), getKeyFromFile());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        sendKeys(By.xpath(loginFieldXpath), login);
+    public void login() {
+        sendKeys(By.xpath(loginFieldXpath), getLogin("default"));
         clickOnElement(By.xpath(enterPassButtonXpath));
-        sendKeys(By.xpath(passwordFieldXpath),password);
+        sendKeys(By.xpath(passwordFieldXpath), getPassword("default"));
         clickOnElement(By.xpath(enterButtonXpath));
     }
 
     @Step("Переходим к отправке нового письма")
-    public void goToNewLetter(){
+    public void goToNewLetter() {
         clickOnElement(By.xpath(createNewLetter));
     }
 }

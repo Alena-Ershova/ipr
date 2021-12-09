@@ -53,12 +53,8 @@ public class EncryptionUtils {
         }
         Key key = keyGen.generateKey();
         File file = new File("key");
-        try {
-            OutputStream os = new FileOutputStream(file);
+        try (OutputStream os = new FileOutputStream(file);) {
             os.write(key.getEncoded());
-            os.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -68,11 +64,9 @@ public class EncryptionUtils {
         File file = new File("key");
         byte[] key = null;
         byte[] emptyArray = new byte[128];
-        try {
-            InputStream is = new FileInputStream(file);
+        try (InputStream is = new FileInputStream(file)){
             //узнаем точную длину ключа
             int keySize = is.read(emptyArray);
-            is.close();
             //переписываем в новый массив только байты ключа
             key = Arrays.copyOfRange(emptyArray, 0, keySize);
         } catch (IOException e) {

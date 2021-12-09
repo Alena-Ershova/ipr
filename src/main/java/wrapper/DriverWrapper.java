@@ -61,7 +61,7 @@ public class DriverWrapper {
                 return element;
             } catch (StaleElementReferenceException e) {
             } catch (WebDriverException e) {
-                System.out.println("esdfs");
+                System.out.println("Элемент не найден");
             }
         }
         throw new NoSuchElementException("Элемент не найден");
