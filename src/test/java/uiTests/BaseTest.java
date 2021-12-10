@@ -1,12 +1,9 @@
 package uiTests;
 
-import io.qameta.allure.Step;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import pages.BasicPage;
 import pages.MainPage;
-
-import java.util.Random;
 
 public class BaseTest {
     protected static BasicPage page;

@@ -17,8 +17,6 @@ import pages.NewLetterPage;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static utils.LoginData.login;
-import static utils.LoginData.password;
 import static utils.TestUtils.createString;
 
 @Epic("Тестирование почты post-shift")
@@ -60,7 +58,7 @@ public class LettersApiTest extends BaseApiTest {
         MainPage page = new MainPage();
         NewLetterPage letterPage = new NewLetterPage();
         page.open();
-        page.login(login, password);
+        page.login();
         Letter letter = new Letter(address, createString(), createString(), null);
         page.goToNewLetter();
         letterPage.sendLetterWithoutCopies(letter);

@@ -9,10 +9,8 @@ import org.junit.jupiter.api.Test;
 import pages.InboxPage;
 import pages.MainPage;
 import pages.NewLetterPage;
-import utils.LoginData;
 
-import static utils.LoginData.login;
-import static utils.LoginData.password;
+import static utils.TestDataStorage.getLogin;
 import static utils.TestUtils.createString;
 
 @Epic("Тестирование почты mail.ru")
@@ -33,8 +31,8 @@ public class SendLetterTest extends BaseTest{
     @Test
     public void sendLetterTest() {
         mainPage.open();
-        mainPage.login(login, password);
-        Letter letter = new Letter(LoginData.login, createString(), createString(), null);
+        mainPage.login();
+        Letter letter = new Letter(getLogin("default"), createString(), createString(), null);
         mainPage.goToNewLetter();
         letterPage.sendLetterWithoutCopies(letter);
         inboxPage.clickOnLetterBySubject(letter.getSubject());

@@ -1,13 +1,11 @@
 package pages;
 
 import io.qameta.allure.Step;
-import models.Letter;
 import org.openqa.selenium.By;
+import static utils.TestDataStorage.getLogin;
+import static utils.TestDataStorage.getPassword;
 
-import static utils.LoginData.login;
-import static utils.LoginData.password;
-
-public class MainPage extends BasicPage{
+public class MainPage extends BasicPage {
     private String loginFieldXpath = "//input[@name=\"login\"]";
     private String domenFieldXpath = "//form[@data-testid=\"logged-out-form\"]//div[2]";
     private String passwordFieldXpath = "//*[@type=\"password\"]";
@@ -22,15 +20,15 @@ public class MainPage extends BasicPage{
     }
 
     @Step("Логин в почту")
-    public void login(String login, String password){
-        sendKeys(By.xpath(loginFieldXpath), login);
+    public void login() {
+        sendKeys(By.xpath(loginFieldXpath), getLogin("default"));
         clickOnElement(By.xpath(enterPassButtonXpath));
-        sendKeys(By.xpath(passwordFieldXpath),password);
+        sendKeys(By.xpath(passwordFieldXpath), getPassword("default"));
         clickOnElement(By.xpath(enterButtonXpath));
     }
 
     @Step("Переходим к отправке нового письма")
-    public void goToNewLetter(){
+    public void goToNewLetter() {
         clickOnElement(By.xpath(createNewLetter));
     }
 }

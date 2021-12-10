@@ -1,7 +1,28 @@
 package utils;
 
+/**
+ * Класс для представления данных для входа
+ */
 public class LoginData {
-    // данные для логина
-    public static final String login = "enotov.enot@internet.ru";
-    public static final String password = "pazz12390";
+    private String login;
+    private String password;
+
+    public LoginData() {
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
