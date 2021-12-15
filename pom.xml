@@ -11,6 +11,7 @@
     <modules>
         <module>iprApi</module>
         <module>iprUi</module>
+        <module>iprUtils</module>
     </modules>
 
     <properties>
