@@ -1,10 +1,9 @@
-package apiTests;
-
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
+
 import models.Letter;
 import models.MessageHeader;
 import models.MessageTextResponse;
@@ -21,7 +20,7 @@ import static utils.TestUtils.createString;
 
 @Epic("Тестирование почты post-shift")
 @Feature("Получение списка писем")
-public class LettersApiTest extends BaseApiTest {
+public class LettersApiTest {
     private final static String HASH = "e0c9d02ddb72226c384758097db0045d";
     private static String key;
     private static String address;

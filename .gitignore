@@ -26,4 +26,5 @@ hs_err_pid*
 ipr.iml
 target
 ipr.iml
-key
+iprApi/key
+iprUi/key

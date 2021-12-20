@@ -2,11 +2,9 @@ package uiTests;
 
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
-import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 import pages.InboxPage;
 import pages.MainPage;
-import utils.LoginData;
 
 @Epic("Тестирование почты mail.ru")
 @Feature("Авторизация в почту")

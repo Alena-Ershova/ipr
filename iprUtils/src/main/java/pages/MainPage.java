@@ -2,6 +2,7 @@ package pages;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+
 import static utils.TestDataStorage.getLogin;
 import static utils.TestDataStorage.getPassword;
 
