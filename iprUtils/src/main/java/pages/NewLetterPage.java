@@ -1,6 +1,7 @@
 package pages;
 
 import io.qameta.allure.Step;
+import models.DBLetter;
 import models.Letter;
 import org.openqa.selenium.By;
 
@@ -20,6 +21,15 @@ public class NewLetterPage extends BasicPage {
         sendKeys(By.xpath(receiverNewLetter), letter.getAddress());
         sendKeys(By.xpath(topicNewLetter), letter.getSubject());
         sendKeys(By.xpath(textNewLetter), letter.getText());
+        clickOnElement(By.xpath(sendNewLetter));
+        clickOnElement(By.xpath(closeNewLetterSent));
+    }
+
+    @Step("Отправляем письмо без копий из базы данных")
+    public void sendLetterWithoutCopies(DBLetter letter) {
+        sendKeys(By.xpath(receiverNewLetter), letter.getEmail());
+        sendKeys(By.xpath(topicNewLetter), letter.getSubject());
+        sendKeys(By.xpath(textNewLetter), letter.getContent());
         clickOnElement(By.xpath(sendNewLetter));
         clickOnElement(By.xpath(closeNewLetterSent));
     }
