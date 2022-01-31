@@ -32,8 +32,8 @@ public class SendLetterFromDbTest extends BaseTest{
     public void sendLetterTest() {
         mainPage.open();
         mainPage.login();
-        DBLetter letter = getLetter(3);
         mainPage.goToNewLetter();
+        DBLetter letter = getLetter();
         letterPage.sendLetterWithoutCopies(letter);
         inboxPage.clickOnLetterBySubject(letter.getSubject());
         inboxPage.checkLetterText(letter.getContent());

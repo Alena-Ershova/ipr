@@ -13,7 +13,7 @@ public class MainPage extends BasicPage {
     private String enterPassButtonXpath = "//*[@data-testid=\"enter-password\"]";
     private String enterButtonXpath = "//*[@data-testid=\"login-to-mail\"]";
     //адреса для отправки нового письма
-    private String createNewLetter = "//span[text()='Написать письмо']";
+    private String createNewLetter = "//span[text()='Написать письмо']/..";
 
 
     public MainPage() {

@@ -13,7 +13,7 @@ public class NewLetterPage extends BasicPage {
     private String receiverNewLetter = "//input[contains(@class,'container')]";
     private String topicNewLetter = "//input[@name='Subject']";
     private String textNewLetter = "//div[@role='textbox']";
-    private String sendNewLetter = "//span[text()='Отправить']";
+    private String sendNewLetter = "//span[text()='Отправить']/..";
     private String closeNewLetterSent = "//*[@class='ico ico_16-close ico_size_s']";
 
     @Step("Отправляем письмо без копий")
