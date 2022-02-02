@@ -13,6 +13,12 @@ public class DBLetter {
     public DBLetter() {
     }
 
+    public DBLetter(String email, String subject, String content) {
+        this.email = email;
+        this.subject = subject;
+        this.content = content;
+    }
+
     public String getEmail() {
         return email;
     }

@@ -14,6 +14,7 @@ public class MainPage extends BasicPage {
     private String enterButtonXpath = "//*[@data-testid=\"login-to-mail\"]";
     //адреса для отправки нового письма
     private String createNewLetter = "//span[text()='Написать письмо']/..";
+    private String sentLetters = "//div[text()='Отправленные']/..";
 
 
     public MainPage() {
@@ -32,5 +33,10 @@ public class MainPage extends BasicPage {
     @Step("Переходим к отправке нового письма")
     public void goToNewLetter() {
         clickOnElement(By.xpath(createNewLetter));
+    }
+
+    @Step("Переходим к отправленным письмам")
+    public void goToSentLetters() {
+        clickOnElement(By.xpath(sentLetters));
     }
 }
