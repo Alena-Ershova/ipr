@@ -32,7 +32,7 @@ public class InboxPage extends BasicPage{
 
     @Step("Открываем письмо с темой {subject}")
     public void clickOnLetterBySubject(String subject){
-        clickOnElement(By.xpath("//span[text()='"+subject+"']/../.."));
+        clickOnElement(By.xpath("//div[@aria-label=\"grid\"]//span[text()='"+subject+"']/../.."));
     }
 
     @Step("Проверям, что текст письма содержит {text}")
