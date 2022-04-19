@@ -27,3 +27,5 @@ ipr.iml
 target
 ipr.iml
 bin
+iprUi/key
+iprApi/key
