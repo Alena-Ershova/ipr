@@ -1,12 +1,16 @@
 package wrapper;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Класс-обертка для web driver
@@ -17,12 +21,31 @@ public class DriverWrapper {
     private WebDriverWait wait = null;
     private static DriverWrapper driverWrapper = null;
     boolean color = false;
+    boolean remote = true;
+
+    private static RemoteWebDriver createRemoteWebdriver() {
+        MutableCapabilities capabilities = new ChromeOptions();
+        capabilities.setCapability("selenoid:options", Map.of(
+                "enableVNC", true,
+                "enableVideo", false
+        ));
+        capabilities.setCapability("screenResolution", "1920x1080x24");
+        capabilities.setCapability("name", "CI Example");
+        try {
+            return new RemoteWebDriver(URI.create(System.getenv("REMOTE_HUB_URL")).toURL(), capabilities);
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException("Cannot resolve hub url");
+        }
+    }
 
     private DriverWrapper() {
-        this.driver = new SafariDriver();
-        driver.manage().window().maximize();
-        driver.manage().deleteAllCookies();
-        color = true;
+        if (remote) {
+            this.driver = createRemoteWebdriver();
+        }
+        else {this.driver = new SafariDriver();
+            driver.manage().window().maximize();
+            driver.manage().deleteAllCookies();
+            color = true;}
         this.wait = new WebDriverWait(driver, 10, 200);
     }
 
