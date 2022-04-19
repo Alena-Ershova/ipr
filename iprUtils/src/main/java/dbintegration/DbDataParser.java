@@ -2,6 +2,7 @@ package dbintegration;
 
 import models.DBLetter;
 
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,8 @@ import java.util.Random;
 public class DbDataParser {
 
     public static DBLetter getLetter() {
-        try (Connection connection = DriverManager.getConnection("jdbc:sqlite:/Users/user/Projects/ipr/contact_mail.db")) {
+        File dbFile = new File("contact_mail.db");
+        try (Connection connection = DriverManager.getConnection("jdbc:sqlite:"+dbFile.getAbsolutePath())) {
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery("SELECT Letter.letter_id, email, content\n" +
                     "FROM Contact INNER JOIN Letter_Contact INNER JOIN Letter INNER JOIN content\n" +
