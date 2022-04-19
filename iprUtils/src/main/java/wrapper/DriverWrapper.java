@@ -49,6 +49,14 @@ public class DriverWrapper {
         this.wait = new WebDriverWait(driver, 10, 200);
     }
 
+    public void switchTo(By locator) {
+        driver.switchTo().frame(getElement(locator));
+    }
+
+    public void unswitch() {
+        driver.switchTo().defaultContent();
+    }
+
     public static DriverWrapper get() {
         if (driverWrapper == null) {
             driverWrapper = new DriverWrapper();
