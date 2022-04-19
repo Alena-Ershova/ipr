@@ -41,6 +41,7 @@ public class DriverWrapper {
     private DriverWrapper() {
         if (remote) {
             this.driver = createRemoteWebdriver();
+            this.driver.manage().window().maximize();
         }
         else {this.driver = new SafariDriver();
             driver.manage().window().maximize();
