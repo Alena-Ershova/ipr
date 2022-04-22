@@ -2,6 +2,9 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
+import io.restassured.http.Cookie;
+import io.restassured.http.Cookies;
+import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 
 import models.Letter;
@@ -14,8 +17,14 @@ import org.junit.jupiter.api.Test;
 import pages.MainPage;
 import pages.NewLetterPage;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import static apiUtils.ApiLogin.login;
+import static apiUtils.ApiLogin.sendLetter;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static utils.TestDataStorage.getLogin;
 import static utils.TestUtils.createString;
 
 @Epic("Тестирование почты post-shift")
@@ -54,19 +63,10 @@ public class LettersApiTest {
     @DisplayName("Получаем входящие письма после отправки нового письма")
     @Test
     public void receiveNewLetterTest() {
-        MainPage page = new MainPage();
-        NewLetterPage letterPage = new NewLetterPage();
-        page.open();
-        page.login();
-        Letter letter = new Letter(address, createString(), createString(), null);
-        page.goToNewLetter();
-        letterPage.sendLetterWithoutCopies(letter);
-        //письмо отправляется не сразу, поэтому приходится ждать
-        try {
-            Thread.sleep(30000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Letter letter = new Letter(getLogin("default"), createString(), createString(), null);
+        List<Cookie> cookieList = new LinkedList<>();
+        String token = login(cookieList);
+        sendLetter(letter, token, cookieList);
         ValidatableResponse listResponse = given()
                 .queryParam("action", "getlist")
                 .queryParam("hash", HASH)
