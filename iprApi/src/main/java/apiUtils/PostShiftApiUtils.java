@@ -41,6 +41,11 @@ public class PostShiftApiUtils {
 
     @Step("Проверяем наличие письма")
     public ValidatableResponse checkLetter(){
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         ValidatableResponse listResponse = getLetters();
         MessageHeader[] messageHeaders = listResponse.extract().body().as(MessageHeader[].class);
         ValidatableResponse response = given()
