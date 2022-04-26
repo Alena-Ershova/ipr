@@ -2,6 +2,9 @@ package models;
 
 import java.util.ArrayList;
 
+/**
+ * Класс для представления письма
+ */
 public class Letter {
     private String address;
     private String subject;

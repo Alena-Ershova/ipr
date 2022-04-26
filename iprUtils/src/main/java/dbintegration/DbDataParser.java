@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Класс для получения данных и базы данных
+ */
 public class DbDataParser {
 
     public static DBLetter getLetter() {

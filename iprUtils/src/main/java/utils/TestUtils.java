@@ -4,6 +4,9 @@ import io.qameta.allure.Step;
 
 import java.util.Random;
 
+/**
+ * Класс, содержащий утилитарные методы для тестов
+ */
 public class TestUtils {
 
     /**

@@ -12,6 +12,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static utils.TestDataStorage.getLogin;
 import static utils.TestUtils.createString;
 
+/**
+ * Тестовый класс для проверки mail.ru
+ */
 @Epic("Тестирование почты mail.ru")
 @Feature("Mail.ru")
 public class MailRuApiTest{

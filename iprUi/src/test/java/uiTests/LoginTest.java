@@ -6,6 +6,9 @@ import org.junit.jupiter.api.*;
 import pages.InboxPage;
 import pages.MainPage;
 
+/**
+ * Тестовый класс для проверки логина
+ */
 @Epic("Тестирование почты mail.ru")
 @Feature("Авторизация в почту")
 public class LoginTest extends BaseTest{

@@ -7,6 +7,9 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
+/**
+ * Класс страницы Входящие
+ */
 public class InboxPage extends BasicPage{
     private String inboxTextXpath = "//*[text()=\"Входящие\"]";
     private String letterXpath = "//span[contains(@class, 'llc__subject')]";

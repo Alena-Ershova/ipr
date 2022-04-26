@@ -5,6 +5,9 @@ import org.junit.jupiter.api.BeforeAll;
 import pages.BasicPage;
 import pages.MainPage;
 
+/**
+ * Базовый класс для тестов
+ */
 public class BaseTest {
     protected static BasicPage page;
 

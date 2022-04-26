@@ -5,6 +5,9 @@ import models.DBLetter;
 import models.Letter;
 import org.openqa.selenium.By;
 
+/**
+ * Класс страницы Отправить новое письмо
+ */
 public class NewLetterPage extends BasicPage {
     public NewLetterPage() {
         super("Новое письмо", "https://e.mail.ru/inbox/");
