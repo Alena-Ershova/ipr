@@ -22,6 +22,7 @@ public class TestDataStorage {
             LoginData loginData = objectMapper.readValue(TestDataStorage.class.getResource("/LoginData.json"), LoginData.class);
             data.setLogin(decrypt(loginData.getLogin(), key));
             data.setPassword(decrypt(loginData.getPassword(), key));
+            data.setHash(loginData.getHash());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,5 +41,12 @@ public class TestDataStorage {
             init();
         }
         return loginStorage.get(key).getPassword();
+    }
+
+    public static String getHash(String key){
+        if (loginStorage == null) {
+            init();
+        }
+        return loginStorage.get(key).getHash();
     }
 }

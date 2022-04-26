@@ -2,10 +2,10 @@ package pages;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import wrapper.DriverWrapper;
 
 import static utils.TestDataStorage.getLogin;
 import static utils.TestDataStorage.getPassword;
+
 
 public class MainPage extends BasicPage {
     private String goToLoginButtonXpath = "//button[text()='Войти']";
