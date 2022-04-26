@@ -42,7 +42,7 @@ public class LettersApiTest {
     public void receiveNewLetterTest() {
         Letter letter = new Letter(getLogin("default"), createString(), createString(), null);
         apiUtil.login();
-        apiUtil.sendLetter(letter);
+        apiUtil.sendLetter(letter, postShift.getEmail());
         ValidatableResponse response = postShift.checkLetter();
         assertTrue(response.extract().body().as(MessageTextResponse.class).getMessage().contains(letter.getText()));
     }

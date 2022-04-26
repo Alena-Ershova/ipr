@@ -40,7 +40,7 @@ public class MailRuApiTest{
     @Test
     public void sendLettersTest() {
         Letter letter = new Letter(getLogin("default"), createString(), createString(), null);
-        Response responseBody = apiUtil.sendLetter(letter);
+        Response responseBody = apiUtil.sendLetter(letter,getLogin("default"));
         Assertions.assertEquals(200, responseBody.jsonPath().getInt("status"));
     }
 

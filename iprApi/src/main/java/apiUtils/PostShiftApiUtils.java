@@ -1,5 +1,6 @@
 package apiUtils;
 
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import models.MessageHeader;
@@ -14,7 +15,9 @@ import static utils.TestUtils.createString;
  */
 public class PostShiftApiUtils {
     private String key;
+    private String email;
 
+    @Step("Создаем почту")
     public void createMail() {
         RestAssured.useRelaxedHTTPSValidation();
         ValidatableResponse response = given()
@@ -25,8 +28,10 @@ public class PostShiftApiUtils {
                 .when().log().all().get("/api.php")
                 .then().log().all().statusCode(200);
         key = response.extract().response().jsonPath().get("key");
+        email = response.extract().response().jsonPath().get("email");
     }
 
+    @Step("Получаем список писем")
     public ValidatableResponse getLetters() {
         ValidatableResponse response = given()
                 .baseUri("https://post-shift.ru")
@@ -38,7 +43,13 @@ public class PostShiftApiUtils {
         return response;
     }
 
+    @Step("Проверяем наличие письма")
     public ValidatableResponse checkLetter(){
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         ValidatableResponse listResponse = getLetters();
         MessageHeader[] messageHeaders = listResponse.extract().body().as(MessageHeader[].class);
         ValidatableResponse response = given()
@@ -50,6 +61,10 @@ public class PostShiftApiUtils {
                 .when().log().all().get("/api.php")
                 .then().log().all().statusCode(200);
         return response;
+    }
+
+    public String getEmail(){
+        return email;
     }
 }
 
