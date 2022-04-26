@@ -92,7 +92,7 @@ public class MailRuApiUtils {
         return token;
     }
 
-    public Response sendLetter(Letter letter){
+    public Response sendLetter(Letter letter, String address){
         RestAssured.useRelaxedHTTPSValidation();
         Response responseBody = given().cookies(myCookies.getCookies())
                 .baseUri("https://e.mail.ru")
@@ -103,9 +103,9 @@ public class MailRuApiUtils {
                 .formParam("id", "8bA78cBd6424961EBcA2296982D412c0")
                 .formParam("from", letter.getAddress())
                 .formParam("subject", letter.getSubject())
-                .formParam("correspondents", "{\"to\":\"<"+letter.getAddress()+">\",\"cc\":\"\",\"bcc\":\"\"}")
+                .formParam("correspondents", "{\"to\":\"<"+address+">\",\"cc\":\"\",\"bcc\":\"\"}")
                 .formParam("sending", "true")
-                .formParam("email", letter.getAddress())
+                .formParam("email", address)
                 .formParam("attaches", "{\"list\":[]}")
                 .formParam("token", token)
                 .when().log().all().post("api/v1/messages/send")
