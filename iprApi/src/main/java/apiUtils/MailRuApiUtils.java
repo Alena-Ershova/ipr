@@ -13,17 +13,19 @@ import static utils.TestDataStorage.getLogin;
 import static utils.TestDataStorage.getPassword;
 
 public class MailRuApiUtils {
+    private String token;
+    private MyCookies myCookies = new MyCookies();
 
-    public  String login(){
+    public void login(){
         authorization();
         ValidatableResponse response = given()
                 .baseUri("https://mail.ru")
-                .cookies(MyCookies.getCookies())
+                .cookies(myCookies.getCookies())
                 .when().log().all().get("/")
                 .then().log().all().statusCode(200);
         String page = response.extract().body().asString();
         assertTrue(page.contains(getLogin("default")));
-        return getToken();
+        getToken();
     }
 
     private void authorization(){
@@ -32,18 +34,18 @@ public class MailRuApiUtils {
                 .baseUri("https://mail.ru")
                 .when().log().all().get("/")
                 .then().log().all().statusCode(200);
-        MyCookies.setCookies(response.extract().response().getDetailedCookies());
-        String token = MyCookies.getCookies().getValue("act");
+        myCookies.setCookies(response.extract().response().getDetailedCookies());
+        String token = myCookies.getCookies().getValue("act");
         response = given()
                 .baseUri("https://auth.mail.ru")
                 .queryParam("login", getLogin("default"))
-                .cookies(MyCookies.getCookies())
+                .cookies(myCookies.getCookies())
                 .when().log().all().get("/api/v1/pushauth/info")
                 .then().log().all().statusCode(200);
-        MyCookies.setCookies(response.extract().response().getDetailedCookies());
+        myCookies.setCookies(response.extract().response().getDetailedCookies());
         response = given()
                 .baseUri("https://auth.mail.ru")
-                .cookies(MyCookies.getCookies())
+                .cookies(myCookies.getCookies())
                 .contentType("application/x-www-form-urlencoded")
                 .header("Referer", "https://mail.ru/")
                 .formParam("login", getLogin("default"))
@@ -53,46 +55,46 @@ public class MailRuApiUtils {
                 .formParam("project", "e.mail.ru")
                 .when().log().all().post("/jsapi/auth")
                 .then().log().all().statusCode(200);
-        MyCookies.setCookies(response.extract().response().getDetailedCookies());
+        myCookies.setCookies(response.extract().response().getDetailedCookies());
     }
 
     private String getToken(){
         String updateToken;
         ValidatableResponse response = given()
                 .baseUri("https://auth.mail.ru")
-                .cookies(MyCookies.getCookies())
+                .cookies(myCookies.getCookies())
                 .redirects().follow(false)
                 .queryParam("from", "https://e.mail.ru/messages/inbox")
                 .header("Host", "auth.mail.ru")
                 .when().log().all().get("/sdc")
                 .then().log().all().statusCode(302);
         String location = response.extract().header("Location");
-        MyCookies.setCookies(response.extract().response().getDetailedCookies());
+        myCookies.setCookies(response.extract().response().getDetailedCookies());
         response = given()
-                .cookies(MyCookies.getCookies())
+                .cookies(myCookies.getCookies())
                 .redirects().follow(false)
                 .header("Host", "e.mail.ru")
                 .header("Referer","https://e.mail.ru/sdc?from=https://e.mail.ru/messages/inbox")
                 .when().log().all().get(location)
                 .then().log().all().statusCode(302);
-        MyCookies.setCookies(response.extract().response().getDetailedCookies());
+        myCookies.setCookies(response.extract().response().getDetailedCookies());
         RestAssured.useRelaxedHTTPSValidation();
         response = given()
                 .baseUri("https://e.mail.ru")
-                .cookies(MyCookies.getCookies())
+                .cookies(myCookies.getCookies())
                 .header("host", "e.mail.ru")
                 .when().log().all().get("/inbox")
                 .then().log().all().statusCode(200);
         updateToken = response.extract().body().asString();
         String beginning = "patron.updateToken(\"";
         int index = updateToken.indexOf(beginning)+beginning.length();
-        updateToken = updateToken.substring(index, updateToken.indexOf("\"", index+beginning.length()));
-        return updateToken;
+        token = updateToken.substring(index, updateToken.indexOf("\"", index+beginning.length()));
+        return token;
     }
 
-    public Response sendLetter(Letter letter, String token){
+    public Response sendLetter(Letter letter){
         RestAssured.useRelaxedHTTPSValidation();
-        Response responseBody = given().cookies(MyCookies.getCookies())
+        Response responseBody = given().cookies(myCookies.getCookies())
                 .baseUri("https://e.mail.ru")
                 .header("origin", "https://e.mail.ru")
                 .header("referer", "https://e.mail.ru/inbox/")
@@ -112,10 +114,10 @@ public class MailRuApiUtils {
         return responseBody;
     }
 
-    public Response getLetters(String token){
+    public Response getLetters(){
         return given()
                         .baseUri("https://e.mail.ru")
-                        .cookies(MyCookies.getCookies())
+                        .cookies(myCookies.getCookies())
                         .queryParam("folder", "0")
                         .queryParam("limit", "50")
                         .queryParam("last_modified", "1645100561")
@@ -127,5 +129,9 @@ public class MailRuApiUtils {
                         .queryParam("_", "1645100701077")
                         .when().log().all().get("/api/v1/k8s/threads/status/smart")
                         .then().log().all().statusCode(200).extract().response();
+    }
+
+    public MyCookies getCookies(){
+        return myCookies;
     }
 }

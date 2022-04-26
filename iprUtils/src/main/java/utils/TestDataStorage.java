@@ -41,4 +41,11 @@ public class TestDataStorage {
         }
         return loginStorage.get(key).getPassword();
     }
+
+    public static String getHash(String key){
+        if (loginStorage == null) {
+            init();
+        }
+        return loginStorage.get(key).getHash();
+    }
 }

@@ -7,17 +7,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MyCookies {
-    private static List<Cookie> cookieList = new LinkedList<>();
+    private List<Cookie> cookieList = new LinkedList<>();
 
-    public static void setCookies(Cookies cookies){
+    public void setCookies(Cookies cookies){
         cookieList.addAll(cookies.asList());
     }
 
-    public static Cookies getCookies(){
+    public Cookies getCookies(){
         return new Cookies(cookieList);
     }
 
-    public static void clearCookies(){
+    public void clearCookies(){
         cookieList.clear();
     }
 }
