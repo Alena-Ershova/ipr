@@ -6,6 +6,10 @@ import org.junit.jupiter.api.*;
 import pages.InboxPage;
 import pages.MainPage;
 
+/**
+ * Тестовый класс для проверки получения списка
+ * входящих писем
+ */
 @Epic("Тестирование почты mail.ru")
 @Feature("Получение писем")
 public class LettersTest extends BaseTest{

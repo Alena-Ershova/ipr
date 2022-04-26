@@ -1,5 +1,6 @@
 package apiUtils;
 
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
@@ -12,10 +13,15 @@ import static io.restassured.RestAssured.*;
 import static utils.TestDataStorage.getLogin;
 import static utils.TestDataStorage.getPassword;
 
+/**
+ * Класс, содержащий вспомогательные методы для проверки
+ * работы api mail.ru
+ */
 public class MailRuApiUtils {
     private String token;
     private MyCookies myCookies = new MyCookies();
 
+    @Step("Логинимся в почту")
     public void login(){
         authorization();
         ValidatableResponse response = given()
@@ -28,6 +34,7 @@ public class MailRuApiUtils {
         getToken();
     }
 
+    @Step("Проходим во входящие")
     private void authorization(){
         RestAssured.useRelaxedHTTPSValidation();
         ValidatableResponse response = given()
@@ -58,6 +65,7 @@ public class MailRuApiUtils {
         myCookies.setCookies(response.extract().response().getDetailedCookies());
     }
 
+    @Step("Получаем токен")
     private String getToken(){
         String updateToken;
         ValidatableResponse response = given()
@@ -92,6 +100,7 @@ public class MailRuApiUtils {
         return token;
     }
 
+    @Step("Отправляем письмо")
     public Response sendLetter(Letter letter, String address){
         RestAssured.useRelaxedHTTPSValidation();
         Response responseBody = given().cookies(myCookies.getCookies())
@@ -114,6 +123,7 @@ public class MailRuApiUtils {
         return responseBody;
     }
 
+    @Step("Получаем входящие письма")
     public Response getLetters(){
         return given()
                         .baseUri("https://e.mail.ru")

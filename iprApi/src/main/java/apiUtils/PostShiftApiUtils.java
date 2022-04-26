@@ -9,6 +9,10 @@ import utils.TestDataStorage;
 import static io.restassured.RestAssured.given;
 import static utils.TestUtils.createString;
 
+/**
+ * Класс, содержащий вспомогательные методы для
+ * проерки работы api post-shift
+ */
 public class PostShiftApiUtils {
     private String key;
     private String email;

@@ -13,6 +13,10 @@ import pages.NewLetterPage;
 import static utils.TestDataStorage.getLogin;
 import static utils.TestUtils.createString;
 
+/**
+ * Тестовый класс для проверки работы механизма
+ * отправки письма
+ */
 @Epic("Тестирование почты mail.ru")
 @Feature("Отправка письма")
 public class SendLetterTest extends BaseTest{

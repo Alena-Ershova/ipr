@@ -12,7 +12,10 @@ import pages.NewLetterPage;
 
 import static dbintegration.DbDataParser.getLetter;
 
-
+/**
+ * Тестовый класс с проверкой отправки писем
+ * из базы данных для mail.ru
+ */
 @Epic("Тестирование почты mail.ru")
 @Feature("Отправка письма из базы данных")
 public class SendLetterFromDbTest extends BaseTest{

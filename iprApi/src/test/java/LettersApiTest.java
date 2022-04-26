@@ -16,6 +16,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static utils.TestDataStorage.getLogin;
 import static utils.TestUtils.createString;
 
+/**
+ * Тестовый класс для проверки работы api post-shift
+ */
 @Epic("Тестирование почты post-shift")
 @Feature("Получение списка писем")
 public class LettersApiTest {

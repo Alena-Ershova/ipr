@@ -6,7 +6,9 @@ import org.openqa.selenium.By;
 import static utils.TestDataStorage.getLogin;
 import static utils.TestDataStorage.getPassword;
 
-
+/**
+ * Класс страницы Главная
+ */
 public class MainPage extends BasicPage {
     private String goToLoginButtonXpath = "//button[text()='Войти']";
     private String frameXpath = "//iframe[@class=\"ag-popup__frame__layout__iframe\"]";

@@ -6,6 +6,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import wrapper.DriverWrapper;
 
+/**
+ * Класс, содержащий базовые методы
+ * для работы со страницами mail.ru
+ */
 public class BasicPage {
     //общие методы
     protected DriverWrapper driver;

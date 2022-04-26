@@ -10,6 +10,9 @@ import java.util.Map;
 import static utils.cipher.EncryptionUtils.decrypt;
 import static utils.cipher.EncryptionUtils.getKeyFromFile;
 
+/**
+ * Класс для получения данных из json файла
+ */
 public class TestDataStorage {
     private static Map<String, LoginData> loginStorage;
 

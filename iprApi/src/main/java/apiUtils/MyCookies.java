@@ -6,6 +6,9 @@ import io.restassured.http.Cookies;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Класс для работы с cookies
+ */
 public class MyCookies {
     private List<Cookie> cookieList = new LinkedList<>();
 
